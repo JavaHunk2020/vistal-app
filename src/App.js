@@ -1,25 +1,75 @@
 import logo from './logo.svg';
 import './App.css';
-
+import React,{ useState,ChangeEvent } from "react";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+  //Hook is ready
+  const  [signup,setSignup]=useState({username:'',password:'',email:'',gender:'Male'});
+
+       const updateFormState= (event)=> {
+         const {name,value}= event.target;
+         setSignup({...signup,[name]:value});
+       }
+
+       const submitData = (event)=> {
+            event.preventDefault();
+            console.log(signup);
+            //Make REST API CALL
+            //http://localhost:9090/v5/signups
+            //METHOD  = POST
+            //
+
+       }
+
+
+  return (<div>
+    <header className="SHeader">
+    </header>
+    <div className="container">
+        <h2>Signup Page!!!!!!!!!!!</h2>
+        <hr/>
+        <img id="img1" style={{height: "120px"}} src="https://tse2.mm.bing.net/th?id=OIP.kKIoNZb1w8VL4H0aDiF5uwHaHs&pid=Api&P=0&h=180"/>
+    <img id="img2" style={{height: "120px"}} src="https://cdn-icons-png.flaticon.com/512/7022/7022927.png"/>
+    <img id="img3" style={{height: "120px"}} src="https://tse2.mm.bing.net/th?id=OIP.kKIoNZb1w8VL4H0aDiF5uwHaHs&pid=Api&P=0&h=180"/>
+    <hr/>
+    <span className="Message">{signup.username}</span>
+      <form onSubmit={submitData}>
+         <div className="form-group">
+               <label style={{fontWeight:"bold"}}>Username</label>
+               <input onChange={updateFormState}   type='text'  name="username" className="form-control" style={{width:"50%"}}/>
+         </div>
+          <br/>
+         <div className="form-group">
+         <label style={{fontWeight:"bold"}}>Password</label>
+               <input   onChange={updateFormState}  type='password' name="password" className="form-control" style={{width:"50%"}}/>
+         </div>
+
+         <div className="form-group">
+         <label style={{fontWeight:"bold"}}>Email</label>
+               <input  onChange={updateFormState} type='email' name="email" className="form-control" style={{width:"50%"}}/>
+         </div>
+
+         <div className="form-group">
+         <label style={{fontWeight:"bold"}}>Gender</label>
+               <select  onChange={updateFormState} name="gender" className="form-control" style={{width:"50%"}}>
+                     <option value="Male">Male</option>
+                     <option value="Female">Female</option>
+                </select>    
+         </div>
+
+         <div className="form-group">
+          <br/> 
+         <button  type="submit"  className="btn btn-primary">Singup</button>
+         <button id="tclear"   type="reset"  className="btn btn-info mx-2">Clear</button>
+         
+         <button  type="button"  className="btn btn-danger mx-2">Login</button>
+
+         </div>
+      </form>
+    
     </div>
-  );
+  
+ </div>);
 }
 
 export default App;
