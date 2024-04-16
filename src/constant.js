@@ -1,0 +1,1 @@
+export const API_SERVER_URI="http://localhost:9090/v5";

@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import React,{ useState,ChangeEvent } from "react";
+import { API_SERVER_URI } from './constant';
+import axios from 'axios';
 function App() {
 
   //Hook is ready
   const  [signup,setSignup]=useState({username:'',password:'',email:'',gender:'Male'});
-
+  const  [emessage,setEmessage]=useState('');
        const updateFormState= (event)=> {
          const {name,value}= event.target;
          setSignup({...signup,[name]:value});
@@ -17,8 +19,24 @@ function App() {
             //Make REST API CALL
             //http://localhost:9090/v5/signups
             //METHOD  = POST
-            //
-
+            //Request Payload
+             axios.post(`${API_SERVER_URI}/signups`,signup).then(response=> {
+              console.log(response);
+              //{
+              ///   "code": "C0194",
+             // "message": "resource is created"
+            //}
+              if(response.status==200){
+                   setEmessage("Signup is done successfully");
+                   //setSignup({username:'',password:'',email:'',gender:'Male'});
+                   document.getElementById("tclear").click();
+              } else{
+                   setEmessage(response.data.message);
+              }
+          }).catch((e) => {
+               console.log(e);
+               setEmessage(e.response.data.message);
+          });
        }
 
 
@@ -32,7 +50,7 @@ function App() {
     <img id="img2" style={{height: "120px"}} src="https://cdn-icons-png.flaticon.com/512/7022/7022927.png"/>
     <img id="img3" style={{height: "120px"}} src="https://tse2.mm.bing.net/th?id=OIP.kKIoNZb1w8VL4H0aDiF5uwHaHs&pid=Api&P=0&h=180"/>
     <hr/>
-    <span className="Message">{signup.username}</span>
+    <span className="Message">{emessage}</span>
       <form onSubmit={submitData}>
          <div className="form-group">
                <label style={{fontWeight:"bold"}}>Username</label>
@@ -63,6 +81,8 @@ function App() {
          <button id="tclear"   type="reset"  className="btn btn-info mx-2">Clear</button>
          
          <button  type="button"  className="btn btn-danger mx-2">Login</button>
+
+         <button  type="button"  className="btn btn-danger mx-2">Signups</button>
 
          </div>
       </form>
