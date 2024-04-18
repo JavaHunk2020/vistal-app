@@ -2,9 +2,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_SERVER_URI } from './constant';
+import { useNavigate } from 'react-router-dom';
 
 function Dashbaord() {
 
+    const navigate = useNavigate();
 
     const [signups,setSignups]=useState([]);
 
@@ -13,6 +15,14 @@ function Dashbaord() {
         fetchSignup();
      },[]);
 
+     const deleteRecord = (email)=> {
+          
+        console.log(`record delete with email id = ${email}`);
+        //make rest call delete teh data
+
+        //Calling this method again to refresh the table
+        fetchSignup();
+     } 
 
      const fetchSignup =()=>{
              //logic to fetch data
@@ -34,6 +44,8 @@ function Dashbaord() {
               <img id="img1" style={{height: "120px"}} src="https://cdn-icons-png.flaticon.com/512/7022/7022927.png"/>
        <img id="img2" style={{height: "120px"}} src="https://cdn-icons-png.flaticon.com/512/7022/7022927.png"/>
        <img id="img3" style={{height: "120px"}} src="https://cdn-icons-png.flaticon.com/512/7022/7022927.png"/>
+       <button onClick={()=>{navigate('/login')}}  type="button"  className="btn btn-danger mx-2">Logout</button>
+
        <hr/>
        <h3>Signups</h3>
 
@@ -57,7 +69,8 @@ function Dashbaord() {
                         <td>{data.gender}</td>
                         <td>{data.password}</td>
                         <td>TOO</td>
-                        <td> <button  type="button"  className="btn btn-danger mx-2">DEL</button><button  type="button"  className="btn btn-success mx-2">EDT</button></td>
+                        <td> 
+                <button onClick={()=>{deleteRecord(data.email);}}  type="button"  className="btn btn-danger mx-2">DEL</button><button  type="button"  className="btn btn-success mx-2">EDT</button></td>
                         
                     </tr>
             ))

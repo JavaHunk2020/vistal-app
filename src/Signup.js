@@ -1,9 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import React,{ useState,ChangeEvent } from "react";
+import { useNavigate } from 'react-router-dom';
+
 import { API_SERVER_URI } from './constant';
 import axios from 'axios';
 function Signup() {
+
+ const navigate = useNavigate();
 
   //Hook is ready
   const  [signup,setSignup]=useState({username:'',password:'',email:'',gender:'Male'});
@@ -80,7 +84,7 @@ function Signup() {
          <button  type="submit"  className="btn btn-primary">Singup</button>
          <button id="tclear"   type="reset"  className="btn btn-info mx-2">Clear</button>
          
-         <button  type="button"  className="btn btn-danger mx-2">Login</button>
+         <button onClick={()=>{navigate('/login')}}  type="button"  className="btn btn-danger mx-2">Login</button>
 
          <button  type="button"  className="btn btn-danger mx-2">Signups</button>
 

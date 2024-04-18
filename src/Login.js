@@ -1,9 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import React,{ useState,ChangeEvent } from "react";
+import { useNavigate } from 'react-router-dom';
 import { API_SERVER_URI } from './constant';
 import axios from 'axios';
 function Login() {
+
+    const navigate = useNavigate();
 
   //Hook is ready
   const  [login,setLogin]=useState({username:'',password:''});
@@ -20,8 +23,11 @@ function Login() {
             //http://localhost:9090/v5/signups
             //METHOD  = POST
             //Request Payload
-             axios.post(`${API_SERVER_URI}/comingsoon`,login).then(response=> {
-             
+             axios.post(`${API_SERVER_URI}/cauth`, {email:login.username,password:login.password} ).then(response=> {
+                console.log(response);
+             if(response.status===200) {
+                 navigate('/dashboard');
+             }
           }).catch((e) => {
                console.log(e);
                setEmessage(e.response.data.message);
@@ -55,7 +61,7 @@ function Login() {
          <button  type="submit"  className="btn btn-primary">Login</button>
          <button id="tclear"   type="reset"  className="btn btn-info mx-2">Clear</button>
          
-         <button  type="button"  className="btn btn-danger mx-2">Signup</button>
+         <button onClick={()=>{navigate('/signup')}}  type="button"  className="btn btn-danger mx-2">Signup</button>
 
          </div>
       </form>

@@ -6,13 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import Dashbaord from './ListSignups';
 import Signup from './Signup';
 import Login from './Login';
+import AppRouter from './AppRouter';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Dashbaord />
-    <Signup/>
-    <Login/>
+     <AppRouter/>
   </React.StrictMode>
 );
 
