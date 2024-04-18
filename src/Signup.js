@@ -34,6 +34,7 @@ function Signup() {
                    setEmessage("Signup is done successfully");
                    //setSignup({username:'',password:'',email:'',gender:'Male'});
                    document.getElementById("tclear").click();
+                   navigate('/login');
               } else{
                    setEmessage(response.data.message);
               }
