@@ -62,7 +62,7 @@ function Login() {
          <button id="tclear"   type="reset"  className="btn btn-info mx-2">Clear</button>
          
          <button onClick={()=>{navigate('/signup')}}  type="button"  className="btn btn-danger mx-2">Signup</button>
-         <button   type="button"  className="btn btn-primary mx-2">Forget Password</button>
+         <button   onClick={()=>{navigate('/forgotPassword')}}    type="button"  className="btn btn-primary mx-2">Forget Password</button>
          </div>
       </form>
     
