@@ -36,12 +36,21 @@ function ResetPassword() {
       console.log("email= "+email);
       console.log("code= "+code);
       //nagen@synergisticit.com&code=KKfxQd
-      if(email==='nagen@synergisticit.com' && code==='KKfxQd'){
+      ///v5/
+      let urlPattern=`validate/code/${email}/${code}`;
+
+      axios.get(`${API_SERVER_URI}/${urlPattern}`).then(res => {
+         console.log(res.data);
          setEmailUsername(email);
-         setShowForgotPassScreen(true);
-      }else{
-         setShowForgotPassScreen(false);
-      }
+         if(res.data.code==='200'){
+            setShowForgotPassScreen(true);
+         }else{
+            setShowForgotPassScreen(false);
+         }
+       }).catch((ex)=>{
+            console.error(ex);
+       });
+ 
   }
 
 
