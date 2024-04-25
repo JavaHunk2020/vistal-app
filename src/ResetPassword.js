@@ -8,6 +8,10 @@ function ResetPassword() {
 
     const navigate = useNavigate();
 
+
+
+      const [updatePassword,setUpdatePassword]=useState({usernameEmail:'',newPassword:'',confirmPassword:''});
+
       //Hook is ready
       const  [usernameEmail,setUsernameEmail]=useState('');
 
@@ -21,7 +25,8 @@ function ResetPassword() {
        
       const updateFormState= (event)=> {
          const value= event.target.value;
-         setUsernameEmail(value);
+         const name= event.target.name;
+         setUpdatePassword({...updatePassword,[name]:value});
        }
 
         //WHEN WE WANTED TO PERFORM SOME ACTION AT THE TIME OF LOADING PAGE
@@ -50,6 +55,22 @@ function ResetPassword() {
        }).catch((ex)=>{
             console.error(ex);
        });
+ 
+  }
+
+  const validateAndUpdatePassword =()=>{
+        updatePassword['usernameEmail']= searchParams.get("email");
+        axios.put(`${API_SERVER_URI}/forgotPassword`,updatePassword).then(response=> {
+         console.log(response);
+         if(response.data.code==="C200"){
+              navigate('/login');
+         } else{
+              setEmessage(response.data.message);
+         }
+     }).catch((e) => {
+          console.log(e);
+          setEmessage(e.response.data.message);
+     });
  
   }
 
@@ -89,7 +110,7 @@ function ResetPassword() {
           <br/>
         <div>
           <br/> 
-         <button  type="button"  className="btn btn-primary">Update Password</button>
+         <button  type="button" onClick={validateAndUpdatePassword}  className="btn btn-primary">Update Password</button>
          <button id="tclear"   type="reset"  className="btn btn-info mx-2">Clear</button>
          <button onClick={()=>{navigate('/login')}}  type="button"  className="btn btn-danger mx-2">Login</button>
          </div>
